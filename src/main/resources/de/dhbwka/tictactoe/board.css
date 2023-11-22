@@ -1,0 +1,38 @@
+.root {
+    -fx-background-color: #000000;
+    /*-fx-background-color: #f2f2f2;*/
+    -fx-padding: 15;
+    -fx-alignment: CENTER;
+}
+
+.card {
+    -fx-min-height: 530;
+    -fx-pref-width: 530;
+    -fx-background-color: #171717;
+    /*-fx-background-color: #ffffff;*/
+    -fx-background-radius: 35;
+    -fx-padding: 15;
+    -fx-alignment: CENTER;
+}
+
+.board {
+    -fx-background-color: #979797;
+    /*-fx-background-color: #000000;*/
+    -fx-pref-width: 500;
+    -fx-pref-height: 500;
+}
+
+.xobox {
+    -fx-pref-width: Infinity;
+    -fx-pref-Height: Infinity;
+    -fx-background-radius: 0;
+    -fx-background-color: #171717;
+    /*-fx-background-color: #ffffff;*/
+    -fx-font-size: 40;
+    -fx-background-insets: 0 0;
+    -fx-text-fill: #ffffff;
+}
+
+.xobox:disabled {
+    -fx-opacity: 0.99;
+}
