@@ -41,7 +41,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        scene = new Scene(loadFXML("menu"), 560, 560, false, SceneAntialiasing.BALANCED);
+        scene = new Scene(loadFXML("menu"), 560, 560);
         stage.setTitle("Tic Tac Toe");
         stage.setResizable(false);
         stage.setScene(scene);
