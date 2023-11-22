@@ -9,8 +9,8 @@ public class BoardController {
     @FXML
     private void clickField(ActionEvent event) {
         String id = ((Button) event.getSource()).getId();
-        int x = Integer.parseInt(id.substring(0, 1));
-        int y = Integer.parseInt(id.substring(1, 2));
+        int x = Character.getNumericValue(id.charAt(0));
+        int y = Character.getNumericValue(id.charAt(1));
         GameManager.getInstance().playerTurn(x, y);
     }
 }
