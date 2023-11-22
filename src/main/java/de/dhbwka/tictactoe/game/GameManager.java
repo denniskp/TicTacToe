@@ -84,14 +84,18 @@ public class GameManager {
     private void turn(int x, int y) {
         board.set(x, y);
         String symbol = playerManager.getSymbol();
-        Platform.runLater(() -> ((Button) Main.getRoot().lookup(String.format("#%d%d", x, y))).setText(symbol));
-        playerManager.next();
+        Platform.runLater(() -> {
+            Button pressedField = (Button) Main.getRoot().lookup("#" + x + y);
+            pressedField.setText(symbol);
+        });
 
+        playerManager.next();
         if (!getGameState().equals(GameStateEnum.UNFINISHED)) {
             String message = getGameState().getMessage();
             Platform.runLater(() -> {
                 Main.setRoot("menu");
-                ((Label) Main.getRoot().lookup("#result")).setText(message);
+                Label resultLabel = (Label) Main.getRoot().lookup("#result");
+                resultLabel.setText(message);
             });
             board.clear();
             playerManager.random();
@@ -102,7 +106,7 @@ public class GameManager {
                     try {
                         Thread.sleep(new Random().nextInt(500) + 500);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                     aiTurn();
                     Main.getRoot().lookupAll("#").forEach(n -> n.setDisable(false));
