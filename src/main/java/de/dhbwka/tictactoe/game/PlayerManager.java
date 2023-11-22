@@ -6,28 +6,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerManager {
-    private final Map<PlayerEnum, String> players = new HashMap<>();
-    private PlayerEnum currentPlayer;
+    private final Map<PlayerEnum, String> map = new HashMap<>();
+    private PlayerEnum player;
 
-    public PlayerEnum getCurrentPlayer() {
-        return currentPlayer;
+    public PlayerEnum getPlayer() {
+        return player;
     }
 
     public PlayerManager() {
-        reset();
-        players.put(currentPlayer, "⨉");
-        players.put(currentPlayer.next(), "⭕");
+        player = PlayerEnum.PLAYER;
+        random();
+    }
+
+    public void random() {
+        player = player.getRandom();
+        map.put(player, "⨉");
+        map.put(player.next(), "⭕");
     }
 
     public void next() {
-        currentPlayer = currentPlayer.next();
+        player = player.next();
+    }
+
+    public boolean isAI() {
+        return player == PlayerEnum.AI;
     }
 
     public String getSymbol() {
-        return players.get(currentPlayer);
-    }
-
-    public void reset() {
-        currentPlayer = PlayerEnum.PLAYER1;
+        return map.get(player);
     }
 }

@@ -7,6 +7,8 @@ import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.util.Random;
+
 public class GameManager {
     private static GameManager instance;
 
@@ -22,12 +24,65 @@ public class GameManager {
 
     public void playerTurn(int x, int y) {
         if (board.isEmpty(x, y)) {
-            turn(x, y, playerManager.getCurrentPlayer());
+            turn(x, y);
         }
     }
 
-    private void turn(int x, int y, PlayerEnum player) {
-        board.set(x, y, player);
+    public void aiTurn() {
+        int[] bestMove = minimax(PlayerEnum.AI);
+        turn(bestMove[0], bestMove[1]);
+    }
+
+    private int[] minimax(PlayerEnum player) {
+        // Initialize variables
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        int bestX = -1;
+        int bestY = -1;
+
+        // Return score if the game (minimax) is finished
+        if (getGameState() != GameStateEnum.UNFINISHED) {
+            return new int[]{ bestX, bestY, getGameState().getScore() };
+        }
+
+        // Loop through board
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                // Check if field is empty
+                if (board.isEmpty(x, y)) {
+                    if (player == PlayerEnum.AI) {
+                        // Maximizing
+                        board.set(x, y, PlayerEnum.AI);
+                        int score = minimax(PlayerEnum.PLAYER)[2];
+
+                        if (score > min) {
+                            min = score;
+                            bestX = x;
+                            bestY = y;
+                        }
+                    } else {
+                        // Minimizing
+                        board.set(x, y, PlayerEnum.PLAYER);
+                        int score = minimax(PlayerEnum.AI)[2];
+
+                        if (score < max) {
+                            max = score;
+                            bestX = x;
+                            bestY = y;
+                        }
+                    }
+                    // Reset board
+                    board.reset(x, y);
+                }
+            }
+        }
+
+        // Return result
+        return new int[]{ bestX, bestY, player.equals(PlayerEnum.AI) ? min : max };
+    }
+
+    private void turn(int x, int y) {
+        board.set(x, y);
         String symbol = playerManager.getSymbol();
         Platform.runLater(() -> ((Button) Main.getRoot().lookup(String.format("#%d%d", x, y))).setText(symbol));
         playerManager.next();
@@ -38,23 +93,33 @@ public class GameManager {
                 Main.setRoot("menu");
                 ((Label) Main.getRoot().lookup("#result")).setText(message);
             });
-
             board.clear();
-            playerManager.reset();
+            playerManager.random();
+        } else {
+            if (playerManager.isAI()) {
+                Main.getRoot().lookupAll("#").forEach(n -> n.setDisable(true));
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(new Random().nextInt(500) + 500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    aiTurn();
+                    Main.getRoot().lookupAll("#").forEach(n -> n.setDisable(false));
+                }).start();
+            }
         }
     }
 
     private GameStateEnum getGameState() {
-        if (board.hasFullRow(PlayerEnum.PLAYER1)) {
-            return GameStateEnum.PLAYER1_WIN;
-        }
-        else if (board.hasFullRow(PlayerEnum.PLAYER2)) {
-            return GameStateEnum.PLAYER2_WIN;
-        }
-        else if (board.isFull()) {
-            return GameStateEnum.TIE;
-        }
+        if (board.hasFullRow(PlayerEnum.PLAYER)) return GameStateEnum.PLAYER_WIN;
+        if (board.hasFullRow(PlayerEnum.AI)) return GameStateEnum.AI_WIN;
+        if (board.isFull()) return GameStateEnum.TIE;
         return GameStateEnum.UNFINISHED;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
     public static GameManager getInstance() {

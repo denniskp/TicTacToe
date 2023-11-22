@@ -6,9 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     private static Scene scene;
@@ -16,15 +18,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         new GameManager();
         launch();
-    }
-
-    @Override
-    public void start(Stage stage) {
-        scene = new Scene(loadFXML("menu"), 560, 560);
-        stage.setTitle("Tic Tac Toe");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
     }
 
     private static Parent loadFXML(String fxml) {
@@ -44,5 +37,14 @@ public class Main extends Application {
 
     public static void setRoot(String fxml) {
         scene.setRoot(loadFXML(fxml));
+    }
+
+    @Override
+    public void start(Stage stage) {
+        scene = new Scene(loadFXML("menu"), 560, 560, false, SceneAntialiasing.BALANCED);
+        stage.setTitle("Tic Tac Toe");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 }

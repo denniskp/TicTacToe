@@ -1,10 +1,16 @@
 package de.dhbwka.tictactoe.game.enums;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public enum PlayerEnum {
-    PLAYER1,
-    PLAYER2;
+    AI,
+    PLAYER;
+
+    public PlayerEnum getRandom() {
+        return values()[ThreadLocalRandom.current().nextInt(values().length)];
+    }
 
     public PlayerEnum next() {
-        return values()[(ordinal() + 1) % values().length];
+        return values()[(this.ordinal() + 1) % values().length];
     }
 }

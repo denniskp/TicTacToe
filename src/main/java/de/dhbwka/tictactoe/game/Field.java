@@ -18,8 +18,12 @@ public class Field {
         return state;
     }
 
-    public void set(PlayerEnum player) {
-        state = FieldEnum.valueOf(player.name());
+    public void set() {
+        state = FieldEnum.valueOf(GameManager.getInstance().getPlayerManager().getPlayer().name());
+    }
+
+    public void set(PlayerEnum playerEnum) {
+        state = FieldEnum.valueOf(playerEnum.name());
     }
 
     public boolean isEmpty() {

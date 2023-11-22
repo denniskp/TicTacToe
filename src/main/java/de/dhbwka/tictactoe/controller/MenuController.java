@@ -8,5 +8,9 @@ public class MenuController {
     @FXML
     private void clickStart() {
         Main.setRoot("board");
+        GameManager gameManager = GameManager.getInstance();
+        if (gameManager.getPlayerManager().isAI()) {
+            gameManager.aiTurn();
+        }
     }
 }
