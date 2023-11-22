@@ -20,15 +20,13 @@ public class Main extends Application {
         launch();
     }
 
-    private static Parent loadFXML(String fxml) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
-            return fxmlLoader.load();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            System.exit(1);
-            return null;
-        }
+    @Override
+    public void start(Stage stage) {
+        scene = new Scene(loadFXML("menu"), 560, 560);
+        stage.setTitle("Tic Tac Toe");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static Parent getRoot() {
@@ -39,12 +37,14 @@ public class Main extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    @Override
-    public void start(Stage stage) {
-        scene = new Scene(loadFXML("menu"), 560, 560);
-        stage.setTitle("Tic Tac Toe");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+    private static Parent loadFXML(String fxml) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+            return fxmlLoader.load();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            System.exit(1);
+            return null;
+        }
     }
 }
