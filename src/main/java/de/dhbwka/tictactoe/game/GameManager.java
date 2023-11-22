@@ -29,12 +29,15 @@ public class GameManager {
     private void turn(int x, int y, PlayerEnum player) {
         board.set(x, y, player);
         String symbol = playerManager.getSymbol();
-        // Add the symbol to the board
-
+        Platform.runLater(() -> ((Button) Main.getRoot().lookup(String.format("#%d%d", x, y))).setText(symbol));
         playerManager.next();
+
         if (!getGameState().equals(GameStateEnum.UNFINISHED)) {
             String message = getGameState().getMessage();
-            // Change view to "menu" and show the game result
+            Platform.runLater(() -> {
+                Main.setRoot("menu");
+                ((Label) Main.getRoot().lookup("#result")).setText(message);
+            });
 
             board.clear();
             playerManager.reset();

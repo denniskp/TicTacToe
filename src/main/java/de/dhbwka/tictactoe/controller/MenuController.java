@@ -7,6 +7,6 @@ import javafx.fxml.FXML;
 public class MenuController {
     @FXML
     private void clickStart() {
-        // Show game board
+        Main.setRoot("board");
     }
 }
