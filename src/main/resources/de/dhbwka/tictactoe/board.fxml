@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" styleClass="root">
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="de.dhbwka.tictactoe.controller.BoardController" styleClass="root">
+    <VBox styleClass="card">
+        <GridPane styleClass="board">
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="0" id="00" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="2" GridPane.rowIndex="0" id="10" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="4" GridPane.rowIndex="0" id="20" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="2" id="01" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="2" GridPane.rowIndex="2" id="11" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="4" GridPane.rowIndex="2" id="21" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="4" id="02" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="2" GridPane.rowIndex="4" id="12" styleClass="xobox" onAction="#clickField"/>
+            <Button GridPane.columnIndex="4" GridPane.rowIndex="4" id="22" styleClass="xobox" onAction="#clickField"/>
 
+            <columnConstraints>
+                <ColumnConstraints percentWidth="33"/>
+                <ColumnConstraints percentWidth="1"/>
+                <ColumnConstraints percentWidth="33"/>
+                <ColumnConstraints percentWidth="1"/>
+                <ColumnConstraints percentWidth="33"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="33"/>
+                <RowConstraints percentHeight="1"/>
+                <RowConstraints percentHeight="33"/>
+                <RowConstraints percentHeight="1"/>
+                <RowConstraints percentHeight="33"/>
+            </rowConstraints>
+        </GridPane>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@board.css"/>
+    </stylesheets>
 </VBox>
